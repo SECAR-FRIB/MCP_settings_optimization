@@ -191,7 +191,7 @@ struct BestResult {
   double mean  = 0.0;
   Long64_t entries = 0;
 
-  // new ìqualityî metrics
+  // new ‚Äúquality‚Äù metrics
   double B = 0.0;            // flat background level from fit
   double purityFit = 0.0;    // fit-based purity in window
   double sideFrac  = 1.0;    // data-based fraction outside window
@@ -203,7 +203,7 @@ struct BestResult {
 void MCP_auto_CFD_params_wFF()
 {
   // ---------- Input ----------
-  const char* infile = "/mnt/analysis/e20008/dumpedfiles/run2158-00.root";
+  const char* infile = "/pathTo/dumpedfiles/run2158-00.root";
 
   // Detector Upstream timing (crate/slot/channel)
   const int crateA = 1;
@@ -216,6 +216,7 @@ void MCP_auto_CFD_params_wFF()
   const int chanB  = 2;   // <-- EDIT if needed
 
   // ---------- OPTIONAL: Side gating on corner channels ----------
+  // !!!!!!!!!!!!!!! HAS NOT BEEN TESTED !!!!!!!!!!!!!!!!!!!!!!!!!!
   const bool useSideGating = false;   // <-- set true to enable gating
 
   // Define the 4 corner channels for each detector (FILL THESE IN!)
@@ -266,8 +267,8 @@ void MCP_auto_CFD_params_wFF()
   const double sigmaMin = 0.10;           // reject pathological tiny sigma
   const double sigmaMax = 50.0;           // safety
 
-  // Window around peak used to define ìcoreî for purity metrics:
-  // we use mean ± (coreNSigma * sigma)
+  // Window around peak used to define ‚Äúcore‚Äù for purity metrics:
+  // we use mean ¬± (coreNSigma * sigma)
   const double coreNSigma = 5.0;
 
   // Require cleanliness:
@@ -337,6 +338,8 @@ void MCP_auto_CFD_params_wFF()
         ce.tsB = (ULong64_t)ch->GetCoarseTime();
       }
 
+      // This gating was not used 
+      // CHECK validity before using !!!!!!!!!!!!!!!
       if (useSideGating) {
         if (cn == chanA_UL && cr == crateA && sl == slotA) ce.A_UL = ch->GetTrace();
         if (cn == chanA_UR && cr == crateA && sl == slotA) ce.A_UR = ch->GetTrace();
@@ -459,7 +462,7 @@ void MCP_auto_CFD_params_wFF()
         continue;
       }
 
-      // ---- Define ìcoreî window around fitted mean ----
+      // ---- Define ‚Äúcore‚Äù window around fitted mean ----
       double win = coreNSigma * sigma;
       // keep it inside hist range
       double x1 = std::max(hmin, mean - win);
@@ -585,3 +588,4 @@ void MCP_auto_CFD_params_wFF()
 
   std::cout << "\nDone.\n";
 }
+
