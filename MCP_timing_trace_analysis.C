@@ -23,7 +23,7 @@ void MCP_timing_trace_analysis() {
     const int d  = 4;     // delay in samples (can be non-integer too)
 
     // Open ROOT file
-    TFile* pFile = new TFile("/mnt/analysis/e20008/dumpedfiles/run2158-00.root");
+    TFile* pFile = new TFile("/pathTo/dumpedfiles/run2158-00.root");
     // Choose: Crate / Module / Channel
     int plotCrate = 1; // Use 0 for target and 1 for FP4
     int plotMod = 0+2; // Module id's 0 and 1 are reserved for the computer in the root scripts
